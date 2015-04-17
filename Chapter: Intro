@@ -27,7 +27,7 @@ print "and the RNA sequence is $rna\n";
 'UGU' => 'C', 'UGC' => 'C', 'CCU' => 'P', 'CCC' => 'P', 'CCA' => 'P',
 'CCG' => 'P', 'CAA' => 'Q', 'CAG' => 'Q', 'UCU' => 'S', 'UCC' => 'S',
 'UCA' => 'S', 'UCG' => 'S', 'AGU' => 'S', 'AGC' => 'S', 'GAA' => 'E',
-'GAG' => 'E', 'ACU' => 'U', 'ACC' => 'U', 'ACA' => 'U', 'ACG' => 'U',
+'GAG' => 'E', 'ACU' => 'T', 'ACC' => 'T', 'ACA' => 'T', 'ACG' => 'T',
 'GGU' => 'G', 'GGC' => 'G', 'GGA' => 'G', 'GGG' => 'G', 'UGG' => 'W',
 'CAU' => 'H', 'CAC' => 'H', 'UAU' => 'Y', 'UAC' => 'Y', 'AUU' => 'I',
 'AUC' => 'I', 'AUA' => 'I', 'GUU' => 'V', 'GUC' => 'V', 'GUA' => 'V',
@@ -75,7 +75,7 @@ print "3' $compl\ 5'\n";
 'UGU' => 'C', 'UGC' => 'C', 'CCU' => 'P', 'CCC' => 'P', 'CCA' => 'P',
 'CCG' => 'P', 'CAA' => 'Q', 'CAG' => 'Q', 'UCU' => 'S', 'UCC' => 'S',
 'UCA' => 'S', 'UCG' => 'S', 'AGU' => 'S', 'AGC' => 'S', 'GAA' => 'E',
-'GAG' => 'E', 'ACU' => 'U', 'ACC' => 'U', 'ACA' => 'U', 'ACG' => 'U',
+'GAG' => 'E', 'ACU' => 'T', 'ACC' => 'T', 'ACA' => 'T', 'ACG' => 'T',
 'GGU' => 'G', 'GGC' => 'G', 'GGA' => 'G', 'GGG' => 'G', 'UGG' => 'W',
 'CAU' => 'H', 'CAC' => 'H', 'UAU' => 'Y', 'UAC' => 'Y', 'AUU' => 'I',
 'AUC' => 'I', 'AUA' => 'I', 'GUU' => 'V', 'GUC' => 'V', 'GUA' => 'V',
@@ -91,3 +91,53 @@ for ($i=0; $i < length($rnaseq) -2; $i = $i + 3){
 	print "$amino_acid";
 }
 print "\n";
+
+#Exercise 1.3 Modify 1.1 to generate all three reading frames from original strand.
+#!/usr/local/bin/perl
+#explicitly show strand and its complement
+$dna = 'GAACTGGGT';
+print "5' $dna\ 3' \n";
+$rev = reverse($dna);
+$rev =~ tr/ACGT/TGCA/;
+$compl =reverse($rev);
+print "3' $compl\ 5'\n";
+%code = (
+'GCU' => 'A', 'GCC' => 'A', 'GCA' => 'A', 'GCG' => 'A', 'UUA' => 'L',
+'UUG' => 'L', 'CUU' => 'L', 'CUC' => 'L', 'CUA' => 'L', 'CUG' => 'L',
+'CGU' => 'R', 'CGC' => 'R', 'CGA' => 'R', 'CGG' => 'R', 'AGA' => 'R',
+'AGG' => 'R', 'AAA' => 'K', 'AAG' => 'K', 'AAU' => 'N', 'AAC' => 'N',
+'AUG' => 'M', 'GAU' => 'D', 'GAC' => 'D', 'UUU' => 'F', 'UUC' => 'F',
+'UGU' => 'C', 'UGC' => 'C', 'CCU' => 'P', 'CCC' => 'P', 'CCA' => 'P',
+'CCG' => 'P', 'CAA' => 'Q', 'CAG' => 'Q', 'UCU' => 'S', 'UCC' => 'S',
+'UCA' => 'S', 'UCG' => 'S', 'AGU' => 'S', 'AGC' => 'S', 'GAA' => 'E',
+'GAG' => 'E', 'ACU' => 'T', 'ACC' => 'T', 'ACA' => 'T', 'ACG' => 'T',
+'GGU' => 'G', 'GGC' => 'G', 'GGA' => 'G', 'GGG' => 'G', 'UGG' => 'W',
+'CAU' => 'H', 'CAC' => 'H', 'UAU' => 'Y', 'UAC' => 'Y', 'AUU' => 'I',
+'AUC' => 'I', 'AUA' => 'I', 'GUU' => 'V', 'GUC' => 'V', 'GUA' => 'V',
+'GTG' => 'V'
+);
+
+$rnaseq=$dna;
+$rnaseq=~tr/T/U/;
+
+for ($i=0; $i < length($rnaseq) -2; $i = $i + 3){
+	$codon=substr($rnaseq, $i, 3);
+	$amino_acid=$code{$codon};
+	print "$amino_acid";
+}
+print "\n"
+;
+for ($i=1; $i < length($rnaseq) -2; $i = $i + 3){
+	$codon=substr($rnaseq, $i, 3);
+	$amino_acid=$code{$codon};
+	print "$amino_acid";
+}
+print "\n"
+;
+for ($i=2; $i < length($rnaseq) -2; $i = $i + 3){
+	$codon=substr($rnaseq, $i, 3);
+	$amino_acid=$code{$codon};
+	print "$amino_acid";
+}
+print "\n"
+;
