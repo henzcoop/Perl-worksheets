@@ -1,1 +1,44 @@
+#!/usr/local/bin/perl
+#example of a program to find cutters
+#introduce hash
 
+%enzymes = (
+	'Cly7489II' =>    'AAAAGAG',                  
+	'Cly7489II' =>    'AAAAGGG',                 
+	'ApoI' =>         'AAATTC',                    
+	'ApoI' =>         'AAATTT',                    
+	'AclI' =>         'AACGTT',           
+	'StySQI' =>       'AACNNNNNNATACG', 
+	'HindIII' =>      'AAGCTT',           
+	'CstMI' =>        'AAGGAG', 
+	'BfmI' =>		'CTRYAG'   
+
+);
+
+
+%enzymes_mod = %enzymes;     
+
+%amb = (
+	'R' => '[AG]',
+	'Y' => '[CT]',
+	'N' => '[AGCT]',
+	'W' => '[AT]'
+);
+
+foreach $val (values %enzymes_mod){
+	foreach $key (keys %amb) {
+			$val =~ s/$key/$amb{$key}/g;
+		}
+}
+$seq = 'GATCTGACTAGCGAGCGTGATCAAGCTTGTGAGGAATTCCTTGATGCTGTAGCGCGAGC';
+
+for ($i = 0; $i < length($seq) - 5; $i++){
+	$testseq = substr($seq, $i, 6);
+		foreach $key (keys %enzymes_mod){
+			if ($testseq =~ /$enzymes_mod{$key}/){
+				$pos = $i + 1;
+				print
+				"$key\t$pos\t$testseq\t$enzymes{$key}\n";
+				}
+			}
+		}
