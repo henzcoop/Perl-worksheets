@@ -1,5 +1,6 @@
 #!/usr/local/bin/perl
 #example of a program to find cutters
+#"cut.pl"
 #introduce hash
 
 %enzymes = (
@@ -42,3 +43,34 @@ for ($i = 0; $i < length($seq) - 5; $i++){
 				}
 			}
 		}
+
+#!/usr/local/bin/perl
+#example of a program to find sites for AluI and DpnI
+#"justcut1.pl"
+#introduce hash
+
+%enzymes = (
+	               
+	'AluI' =>         'AGCT',                    
+	'DpnI' =>         'GATC',                    
+);
+
+
+$seq = 'GATCTGACTAGCGAGCGTGATCAAGCTTGTGAGGAATTCCTTGATGCTGTAGCGCGAGC';
+
+
+		foreach $key (keys %enzymes){
+			if ($seq =~ /$enzymes{$key}/){
+				
+				print "Match with $key\n";
+				
+			}
+		}
+#!/usr/local/bin/perl
+#example of a program to generate complement of ambiguous sequences
+#"compamb.pl"
+@dna = qw('GDGCHC' 'GTMKAC' 'ACNNNNGTAYC' );
+foreach $dna (@dna){
+	$dna =~ tr/ATCGRBMHYVKD/TAGCYVKDRBMH/;
+print "$dna\n";
+}
