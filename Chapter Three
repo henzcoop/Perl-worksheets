@@ -1,0 +1,39 @@
+#!/usr/local/bin/perl
+# Chapter 3 example: sirna.pl
+# read seq from file
+open(IN, 'mrna.fa') or die "Could not open file mrna.fa\n";
+while (<IN>) {
+	unless (/>/) {
+		chomp;
+		$seq .= $_;
+		
+	}
+}
+close IN;
+
+# analyze the seq that was read from file
+# stepping thru each pos of the seq
+for ($i = 0; $i < length($seq) - 22; $i++) {
+	$testseq = substr($seq, $i, 23);
+	# check if first two pos are AA and
+	# last are TT
+	if  ($testseq =~ /^AA.*TT$/) {
+		#test GC content
+		#count number of G and C
+		$gc_content = ($testseq =~ tr/GC//)/23;
+		#is the GC content within 30-50 range?
+		if (($gc_content >= 0.3) && ($gc_content <= 0.5)) {
+		#does sequence contain stretches of A, T, C, G?
+		unless (($testseq =~ /A{4}/)
+			|| ($testseq =~ /T{4}/)
+			|| ($testseq =~ /G{4}/)
+			|| ($testseq =~ /C{4}/)
+			
+			#avoid regions of six runs of G or C
+			|| ($testseq =~ /[GC]{6}/))
+		{
+			print "pos $i $testseq\n";
+		}
+	}
+}
+}
